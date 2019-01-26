@@ -1,6 +1,7 @@
 import tempfile
 
 import tensorflow as tf
+import tensorflow.contrib.slim as slim
 
 from rude_carnie.yolodetect import PersonDetectorYOLOTiny
 from rude_carnie.guess import AGE_LIST, GENDER_LIST, RESIZE_FINAL, classify_one_multi_crop
@@ -18,21 +19,25 @@ class AgeGenderDetector:
         self.image_inputs = {}
         self.softmax_outputs = {}
 
+
         config = tf.ConfigProto(allow_soft_placement=True)
-        self.sessions = {class_type: tf.Session(config=config) for class_type in ('age', 'gender')}
 
-        for class_type in ('age', 'gender'):
-            with self.sessions[class_type]:
-                self.image_inputs[class_type] = tf.placeholder(tf.float32, [None, RESIZE_FINAL, RESIZE_FINAL, 3])
-                logits = inception_v3(len(self.label_lists[class_type]), self.image_inputs[class_type], 1, False)
+        self.input = tf.placeholder(tf.float32, [None, RESIZE_FINAL, RESIZE_FINAL, 3])
 
-                model_checkpoint_path, global_step = get_checkpoint(
-                    checkpoint_paths[class_type], None, 'checkpoint')
+        self.session = tf.Session(config=config)
 
-                saver = tf.train.Saver()
-                saver.restore(self.sessions[class_type], model_checkpoint_path)
+        print("[KEKLOG] Loading models...")
 
-                self.softmax_outputs[class_type] = tf.nn.softmax(logits)
+        for model_name in ('age', 'gender'):
+            with tf.variable_scope(model_name):
+                self.softmax_outputs[model_name] = tf.nn.softmax(inception_v3(len(self.label_lists[model_name]), self.input, 1, False))
+                slim.assign_from_checkpoint_fn(
+                    model_path=tf.train.latest_checkpoint(checkpoint_paths[model_name]),
+                    var_list={k.name[k.name.find('/')+1:k.name.find(':')]: k for k in tf.contrib.framework.get_variables_to_restore(include=[model_name])}
+                )(self.session)
+
+        print("[KEKLOG] Models loaded")
+
 
     def run(self, image):
         face_files, rectangles = self.face_detect.run_img(image)
@@ -41,17 +46,16 @@ class AgeGenderDetector:
         result = {}
 
         for class_type in ('age', 'gender'):
-            with self.sessions[class_type]:
-                for image_file in face_files:
-                    result[class_type] = classify_one_multi_crop(
-                        self.sessions[class_type],
-                        self.label_lists[class_type],
-                        self.softmax_outputs[class_type],
-                        ImageCoder(),
-                        self.image_inputs[class_type],
-                        image_file,
-                        writer=None
-                    )
+            for image_file in face_files:
+                result[class_type] = classify_one_multi_crop(
+                    self.session,
+                    self.label_lists[class_type],
+                    self.softmax_outputs[class_type],
+                    ImageCoder(),
+                    self.input,
+                    image_file,
+                    writer=None
+                )
 
         return result
 
@@ -61,10 +65,10 @@ if __name__ == '__main__':
     import skimage.io
     age_gender_detector = AgeGenderDetector(
         work_dir=tempfile.mkdtemp(prefix='age-gender-'),
-        yolo_path=Path('~/path/to/YOLO_tiny.ckpt').expanduser(),
-        age_path=Path('~/path/to/inception-age-22801/').expanduser(),
-        gender_path=Path('~/path/to/inception-gender-21936/').expanduser()
+        yolo_path=Path('../models/YOLO_tiny.ckpt').expanduser(),
+        age_path=Path('../models/age').expanduser(),
+        gender_path=Path('../models/gender').expanduser()
     )
 
-    image = skimage.io.imread(Path('~/path/to/somepic.jpg').expanduser())
+    image = skimage.io.imread(Path('../images/grisha.jpg').expanduser())
     print(age_gender_detector.run(image))
