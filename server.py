@@ -13,7 +13,7 @@ logging.basicConfig(
 
 app = Flask(__name__)
 storage_dir = Path(tempfile.mkdtemp(prefix='photokek-'))
-logging.debug(f'Data directory is at {storage_dir}')
+logging.debug('Data directory is at {storage_dir}'.format(storage_dir=storage_dir))
 
 
 def process(image):
@@ -31,22 +31,26 @@ def result():
     result_dir = storage_dir / key
 
     if not result_dir.exists():
-        logging.warning(f'Key {key} not found in {storage_dir}')
+        logging.warning('Key {key} not found in {storage_dir}'.format(
+            key=key,
+            storage_dir=storage_dir
+        ))
         abort(404)
 
-    logging.info(f'Serving key {key} from {storage_dir}')
+    logging.info('Serving key {key} from {storage_dir}'.format(
+        key=key, storage_dir=storage_dir))
     with open(result_dir / 'image.png', 'rb') as f:
         im_b64 = base64.b64encode(f.read()).decode('ascii')
     with open(result_dir / 'text.txt', 'r') as f:
         im_text = f.read()
 
-    return f'''
+    return '''
     <!doctype html>
     <title>Result</title>
     <h1>Result</h1>
     <img src="data:image/png;base64,{im_b64}" width="500">
     <p>{im_text}</p>
-    '''
+    '''.format(im_b64=im_b64, im_text=im_text)
 
 
 @app.route('/upload', methods=['POST'])
@@ -55,21 +59,33 @@ def upload():
         return redirect('root')
     in_file = request.files['image']
     logging.info(
-        f'Received file: filename={in_file.filename!r}, mimetype={in_file.mimetype!r}'
+        'Received file: filename={filename!r}, mimetype={mimetype!r}'.format(
+            filename=in_file.filename,
+            mimetype=in_file.mimetype
+        )
     )
     in_image = skimage.io.imread(in_file.stream)
     logging.debug(
-        f'Image shape is {in_image.shape}'
+        'Image shape is {shape}'.format(shape=in_image.shape)
     )
     key = hash_image(in_image)
     out_dir = storage_dir / key
     if out_dir.exists():
-        logging.info(f'Processed version of {in_file.filename!r} is cached in {out_dir}')
+        logging.info('Processed version of {filename!r} is cached in {out_dir}'.format(
+            filename=in_file.filename,
+            out_dir=out_dir
+        ))
     else:
-        logging.info(f'Processing {in_file.filename!r}, key={key}')
+        logging.info('Processing {filename!r}, key={key}'.format(
+            filename=in_file.filename,
+            key=key
+        ))
         out_dir.mkdir(parents=True)
         out_image, out_text = process(in_image)
-        logging.info(f'Saving processed {in_file.filename!r} to {out_dir}')
+        logging.info('Saving processed {filename!r} to {out_dir}'.format(
+            filename=in_file.filename,
+            out_dir=out_dir
+        ))
         skimage.io.imsave(out_dir / 'image.png', out_image)
         with (out_dir / 'text.txt').open('w') as f:
             f.write(out_text)
