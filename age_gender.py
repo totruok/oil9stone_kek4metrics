@@ -30,7 +30,9 @@ class AgeGenderDetector:
 
         for model_name in ('age', 'gender'):
             with tf.variable_scope(model_name):
-                self.softmax_outputs[model_name] = tf.nn.softmax(inception_v3(len(self.label_lists[model_name]), self.input, 1, False))
+                self.softmax_outputs[model_name] = tf.nn.softmax(
+                    inception_v3(len(self.label_lists[model_name]), self.input, 1, False)
+                )
                 slim.assign_from_checkpoint_fn(
                     model_path=tf.train.latest_checkpoint(checkpoint_paths[model_name]),
                     var_list={k.name[k.name.find('/')+1:k.name.find(':')]: k for k in tf.contrib.framework.get_variables_to_restore(include=[model_name])}
