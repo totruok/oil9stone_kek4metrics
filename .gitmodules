@@ -1,0 +1,3 @@
+[submodule "rude_carnie"]
+	path = rude_carnie
+	url = git@github.com:totruok/rude-carnie.git
