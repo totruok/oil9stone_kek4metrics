@@ -35,6 +35,23 @@ def hash_image(image):
     return str(hash(image.data.tobytes()) % 0xFFFFFFFFFFFFFFFF)
 
 
+@app.route('/retrieve/<key>', methods=['GET'])
+def retrieve(key):
+    result_dir = storage_dir / key
+
+    if not result_dir.exists():
+        logging.warning('Key {key} not found in {storage_dir}'.format(
+            key=key,
+            storage_dir=storage_dir
+        ))
+        abort(404)
+
+    logging.info('Serving key {key} from {storage_dir}'.format(
+        key=key, storage_dir=storage_dir))
+
+    return send_from_directory(result_dir, 'image.png')
+
+
 @app.route('/result', methods=['GET'])
 def result():
     key = request.args['key']
@@ -47,20 +64,18 @@ def result():
         ))
         abort(404)
 
-    logging.info('Serving key {key} from {storage_dir}'.format(
-        key=key, storage_dir=storage_dir))
-    with open(result_dir / 'image.png', 'rb') as f:
-        im_b64 = base64.b64encode(f.read()).decode('ascii')
     with open(result_dir / 'text.txt', 'r') as f:
         im_text = f.read()
 
-    return '''
-    <!doctype html>
-    <title>Result</title>
-    <h1>Result</h1>
-    <img src="data:image/png;base64,{im_b64}" width="500">
-    <p>{im_text}</p>
-    '''.format(im_b64=im_b64, im_text=im_text)
+    return render_template(
+        'template.html',
+        pic=key,
+        description=im_text,
+        pic2='',
+        pic3='',
+        pic4='',
+        pic5='',
+    )
 
 
 @app.route('/upload', methods=['POST'])
