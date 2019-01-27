@@ -4,7 +4,7 @@ import tempfile
 from pathlib import Path
 
 import skimage.io
-from flask import Flask, request, redirect, url_for, abort
+from flask import Flask, request, redirect, url_for, abort, render_template, send_from_directory
 
 from age_gender import AgeGenderDetector
 
@@ -104,15 +104,7 @@ def upload():
 
 @app.route('/')
 def root():
-    return '''
-    <!doctype html>
-    <title>Process new image</title>
-    <h1>Process new image</h1>
-    <form method=post enctype=multipart/form-data action=upload>
-      <input type=file name=image>
-      <input type=submit value=Upload>
-    </form>
-    '''
+    return render_template('index.html')
 
 
 if __name__ == '__main__':

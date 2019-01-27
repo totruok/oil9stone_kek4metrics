@@ -1,0 +1,130 @@
+/**
+ * @license
+ * MyFonts Webfont Build ID 3473108, 2017-10-26T05:26:09-0400
+ * 
+ * The fonts listed in this notice are subject to the End User License
+ * Agreement(s) entered into by the website owner. All other parties are 
+ * explicitly restricted from using the Licensed Webfonts(s).
+ * 
+ * You may obtain a valid license at the URLs below.
+ * 
+ * Webfont: TTNorms-Black by TypeType
+ * URL: https://www.myfonts.com/fonts/type-type/tt-norms/black/
+ * 
+ * Webfont: TTNorms-Bold by TypeType
+ * URL: https://www.myfonts.com/fonts/type-type/tt-norms/bold/
+ * 
+ * Webfont: TTNorms-BlackItalic by TypeType
+ * URL: https://www.myfonts.com/fonts/type-type/tt-norms/black-ital/
+ * 
+ * Webfont: TTNorms-ExtraBold by TypeType
+ * URL: https://www.myfonts.com/fonts/type-type/tt-norms/exbold/
+ * 
+ * Webfont: TTNorms-BoldItalic by TypeType
+ * URL: https://www.myfonts.com/fonts/type-type/tt-norms/bold-ital/
+ * 
+ * Webfont: TTNorms-ExtraBoldItalic by TypeType
+ * URL: https://www.myfonts.com/fonts/type-type/tt-norms/exbold-ital/
+ * 
+ * Webfont: TTNorms-HeavyItalic by TypeType
+ * URL: https://www.myfonts.com/fonts/type-type/tt-norms/heavy-ital/
+ * 
+ * Webfont: TTNorms-ExtraLight by TypeType
+ * URL: https://www.myfonts.com/fonts/type-type/tt-norms/exlight/
+ * 
+ * Webfont: TTNorms-ExtraLightItalic by TypeType
+ * URL: https://www.myfonts.com/fonts/type-type/tt-norms/exlight-ital/
+ * 
+ * Webfont: TTNorms-Italic by TypeType
+ * URL: https://www.myfonts.com/fonts/type-type/tt-norms/ital/
+ * 
+ * Webfont: TTNorms-Heavy by TypeType
+ * URL: https://www.myfonts.com/fonts/type-type/tt-norms/heavy/
+ * 
+ * Webfont: TTNorms-LightItalic by TypeType
+ * URL: https://www.myfonts.com/fonts/type-type/tt-norms/light-ital/
+ * 
+ * Webfont: TTNorms-Light by TypeType
+ * URL: https://www.myfonts.com/fonts/type-type/tt-norms/light/
+ * 
+ * Webfont: TTNorms-Medium by TypeType
+ * URL: https://www.myfonts.com/fonts/type-type/tt-norms/medium/
+ * 
+ * Webfont: TTNorms-Thin by TypeType
+ * URL: https://www.myfonts.com/fonts/type-type/tt-norms/thin/
+ * 
+ * Webfont: TTNorms-Regular by TypeType
+ * URL: https://www.myfonts.com/fonts/type-type/tt-norms/regular/
+ * 
+ * Webfont: TTNorms-MediumItalic by TypeType
+ * URL: https://www.myfonts.com/fonts/type-type/tt-norms/med-ital/
+ * 
+ * Webfont: TTNorms-ThinItalic by TypeType
+ * URL: https://www.myfonts.com/fonts/type-type/tt-norms/thin-ital/
+ * 
+ * 
+ * License: https://www.myfonts.com/viewlicense?type=web&buildid=3473108
+ * Licensed pageviews: 20,000
+ * Webfonts copyright: Copyright (c) 2017 by TypeType. Designers Ivan Gladkikh, Pavel Emelyanov. Technical designers Olexa Volochay, Nadyr Rakhimov, Dmitriy Greshnev. All rights reserved.
+ * 
+ * © 2017 MyFonts Inc
+*/
+
+
+/* @import must be at top of file, otherwise CSS will not work */
+@import url("//hello.myfonts.net/count/34fed4");
+
+  
+@font-face {font-family: 'TTNorms-Black';src: url('../font/34FED4_0_0.eot');src: url('../font/34FED4_0_0.eot?#iefix') format('embedded-opentype'),url('../font/34FED4_0_0.woff2') format('woff2'),url('../font/34FED4_0_0.woff') format('woff'),url('../font/34FED4_0_0.ttf') format('truetype');}
+ 
+  
+@font-face {font-family: 'TTNorms-Bold';src: url('../font/34FED4_1_0.eot');src: url('../font/34FED4_1_0.eot?#iefix') format('embedded-opentype'),url('../font/34FED4_1_0.woff2') format('woff2'),url('../font/34FED4_1_0.woff') format('woff'),url('../font/34FED4_1_0.ttf') format('truetype');}
+ 
+  
+@font-face {font-family: 'TTNorms-BlackItalic';src: url('../font/34FED4_2_0.eot');src: url('../font/34FED4_2_0.eot?#iefix') format('embedded-opentype'),url('../font/34FED4_2_0.woff2') format('woff2'),url('../font/34FED4_2_0.woff') format('woff'),url('../font/34FED4_2_0.ttf') format('truetype');}
+ 
+  
+@font-face {font-family: 'TTNorms-ExtraBold';src: url('../font/34FED4_3_0.eot');src: url('../font/34FED4_3_0.eot?#iefix') format('embedded-opentype'),url('../font/34FED4_3_0.woff2') format('woff2'),url('../font/34FED4_3_0.woff') format('woff'),url('../font/34FED4_3_0.ttf') format('truetype');}
+ 
+  
+@font-face {font-family: 'TTNorms-BoldItalic';src: url('../font/34FED4_4_0.eot');src: url('../font/34FED4_4_0.eot?#iefix') format('embedded-opentype'),url('../font/34FED4_4_0.woff2') format('woff2'),url('../font/34FED4_4_0.woff') format('woff'),url('../font/34FED4_4_0.ttf') format('truetype');}
+ 
+  
+@font-face {font-family: 'TTNorms-ExtraBoldItalic';src: url('../font/34FED4_5_0.eot');src: url('../font/34FED4_5_0.eot?#iefix') format('embedded-opentype'),url('../font/34FED4_5_0.woff2') format('woff2'),url('../font/34FED4_5_0.woff') format('woff'),url('../font/34FED4_5_0.ttf') format('truetype');}
+ 
+  
+@font-face {font-family: 'TTNorms-HeavyItalic';src: url('../font/34FED4_6_0.eot');src: url('../font/34FED4_6_0.eot?#iefix') format('embedded-opentype'),url('../font/34FED4_6_0.woff2') format('woff2'),url('../font/34FED4_6_0.woff') format('woff'),url('../font/34FED4_6_0.ttf') format('truetype');}
+ 
+  
+@font-face {font-family: 'TTNorms-ExtraLight';src: url('../font/34FED4_7_0.eot');src: url('../font/34FED4_7_0.eot?#iefix') format('embedded-opentype'),url('../font/34FED4_7_0.woff2') format('woff2'),url('../font/34FED4_7_0.woff') format('woff'),url('../font/34FED4_7_0.ttf') format('truetype');}
+ 
+  
+@font-face {font-family: 'TTNorms-ExtraLightItalic';src: url('../font/34FED4_8_0.eot');src: url('../font/34FED4_8_0.eot?#iefix') format('embedded-opentype'),url('../font/34FED4_8_0.woff2') format('woff2'),url('../font/34FED4_8_0.woff') format('woff'),url('../font/34FED4_8_0.ttf') format('truetype');}
+ 
+  
+@font-face {font-family: 'TTNorms-Italic';src: url('../font/34FED4_9_0.eot');src: url('../font/34FED4_9_0.eot?#iefix') format('embedded-opentype'),url('../font/34FED4_9_0.woff2') format('woff2'),url('../font/34FED4_9_0.woff') format('woff'),url('../font/34FED4_9_0.ttf') format('truetype');}
+ 
+  
+@font-face {font-family: 'TTNorms-Heavy';src: url('../font/34FED4_A_0.eot');src: url('../font/34FED4_A_0.eot?#iefix') format('embedded-opentype'),url('../font/34FED4_A_0.woff2') format('woff2'),url('../font/34FED4_A_0.woff') format('woff'),url('../font/34FED4_A_0.ttf') format('truetype');}
+ 
+  
+@font-face {font-family: 'TTNorms-LightItalic';src: url('../font/34FED4_B_0.eot');src: url('../font/34FED4_B_0.eot?#iefix') format('embedded-opentype'),url('../font/34FED4_B_0.woff2') format('woff2'),url('../font/34FED4_B_0.woff') format('woff'),url('../font/34FED4_B_0.ttf') format('truetype');}
+ 
+  
+@font-face {font-family: 'TTNorms-Light';src: url('../font/34FED4_C_0.eot');src: url('../font/34FED4_C_0.eot?#iefix') format('embedded-opentype'),url('../font/34FED4_C_0.woff2') format('woff2'),url('../font/34FED4_C_0.woff') format('woff'),url('../font/34FED4_C_0.ttf') format('truetype');}
+ 
+  
+@font-face {font-family: 'TTNorms-Medium';src: url('../font/34FED4_D_0.eot');src: url('../font/34FED4_D_0.eot?#iefix') format('embedded-opentype'),url('../font/34FED4_D_0.woff2') format('woff2'),url('../font/34FED4_D_0.woff') format('woff'),url('../font/34FED4_D_0.ttf') format('truetype');}
+ 
+  
+@font-face {font-family: 'TTNorms-Thin';src: url('../font/34FED4_E_0.eot');src: url('../font/34FED4_E_0.eot?#iefix') format('embedded-opentype'),url('../font/34FED4_E_0.woff2') format('woff2'),url('../font/34FED4_E_0.woff') format('woff'),url('../font/34FED4_E_0.ttf') format('truetype');}
+ 
+  
+@font-face {font-family: 'TTNorms-Regular';src: url('../font/34FED4_F_0.eot');src: url('../font/34FED4_F_0.eot?#iefix') format('embedded-opentype'),url('../font/34FED4_F_0.woff2') format('woff2'),url('../font/34FED4_F_0.woff') format('woff'),url('../font/34FED4_F_0.ttf') format('truetype');}
+ 
+  
+@font-face {font-family: 'TTNorms-MediumItalic';src: url('../font/34FED4_10_0.eot');src: url('../font/34FED4_10_0.eot?#iefix') format('embedded-opentype'),url('../font/34FED4_10_0.woff2') format('woff2'),url('../font/34FED4_10_0.woff') format('woff'),url('../font/34FED4_10_0.ttf') format('truetype');}
+ 
+  
+@font-face {font-family: 'TTNorms-ThinItalic';src: url('../font/34FED4_11_0.eot');src: url('../font/34FED4_11_0.eot?#iefix') format('embedded-opentype'),url('../font/34FED4_11_0.woff2') format('woff2'),url('../font/34FED4_11_0.woff') format('woff'),url('../font/34FED4_11_0.ttf') format('truetype');}
+ 
