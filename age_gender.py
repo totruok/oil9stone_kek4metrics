@@ -1,3 +1,4 @@
+import logging
 import tempfile
 
 import tensorflow as tf
@@ -7,6 +8,11 @@ from rude_carnie.guess import AGE_LIST, GENDER_LIST, RESIZE_FINAL, classify_one_
 from rude_carnie.model import inception_v3
 from rude_carnie.utils import ImageCoder
 from rude_carnie.yolodetect import PersonDetectorYOLOTiny
+
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='[%(asctime)-15s] %(levelname)s: %(message)s'
+)
 
 
 class AgeGenderDetector:
@@ -24,7 +30,7 @@ class AgeGenderDetector:
 
         self.session = tf.Session(config=config)
 
-        print("[KEKLOG] Loading models...")
+        logging.debug("[KEKLOG] Loading models...")
 
         for model_name in ('age', 'gender'):
             with tf.variable_scope(model_name):
@@ -39,11 +45,12 @@ class AgeGenderDetector:
                     }
                 )(self.session)
 
-        print("[KEKLOG] Models loaded")
+        logging.debug("[KEKLOG] Models loaded")
 
     def run(self, image):
         face_files, rectangles = self.face_detect.run_img(image)
-        print(face_files, rectangles)
+        logging.debug("Face files: {}".format(face_files))
+        logging.debug("Rectangles: {}".format(rectangles))
 
         result = {}
 
