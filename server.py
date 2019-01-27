@@ -86,11 +86,19 @@ def process(image):
     gender, gender_prob = age_gender['gender']
     logging.debug('Computed age: {} (p={}), gender: {} (p={})'.format(age_range, age_prob, gender, gender_prob))
 
+    name = 'image caption'
+
     # qs = sort_questions(age_range, gender, questions)
     # q = qs[0]
     # caption = q['name']
 
-    return image, 'funny text'
+    meme_id = ''
+    text_on_picture = 'Котик во время дедлайна'
+    text = 'YOLO yobanah abyrvalg'
+
+    templates = [(meme_id, text_on_picture, text)]
+
+    return image, name, templates
 
 
 def hash_image(image):
@@ -126,17 +134,16 @@ def result():
         ))
         abort(404)
 
-    with open(result_dir / 'text.txt', 'r') as f:
-        im_text = f.read()
+    with (result_dir / 'data.json').open('r') as fp:
+        data = json.load(fp)
+    name, templates = data['name'], data['templates']
 
     return render_template(
         'template.html',
-        pic=key,
-        description=im_text,
-        pic2='',
-        pic3='',
-        pic4='',
-        pic5='',
+        image_key=key,
+        name=name,
+        description='',
+        templates=templates
     )
 
 
@@ -168,14 +175,18 @@ def upload():
             key=key
         ))
         out_dir.mkdir(parents=True)
-        out_image, out_text = process(in_image)
+        out_image, name, templates = process(in_image)
         logging.info('Saving processed {filename!r} to {out_dir}'.format(
             filename=in_file.filename,
             out_dir=out_dir
         ))
+        data = {
+            'name': name,
+            'templates': templates
+        }
         skimage.io.imsave(out_dir / 'image.png', out_image)
-        with (out_dir / 'text.txt').open('w') as f:
-            f.write(out_text)
+        with (out_dir / 'data.json').open('w') as fp:
+            json.dump(data, fp)
     return redirect(url_for('result', key=key))
 
 
