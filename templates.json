@@ -177,6 +177,7 @@
             "age": "(38, 43)"
         },
         "swap_to_use": "monty2",
+        "correct": 5,
         "templates": [
             {
                 "access_key_picture": "37c283462e0e09a632ac350b65130b0c.jpe",
