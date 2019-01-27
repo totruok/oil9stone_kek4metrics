@@ -4,6 +4,7 @@ import logging
 import random
 import tempfile
 import time
+import hashlib
 from pathlib import Path
 
 import requests
@@ -130,7 +131,7 @@ def process(image):
 
 
 def hash_image(image):
-    return '{:016x}'.format(hash(image.data.tobytes()) % 0xFFFFFFFFFFFFFFFF)
+    return hashlib.sha3_224(image.data.tobytes()).hexdigest()
 
 
 @app.route('/retrieve/<key>', methods=['GET'])
