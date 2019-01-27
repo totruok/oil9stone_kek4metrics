@@ -6,6 +6,8 @@ from pathlib import Path
 import skimage.io
 from flask import Flask, request, redirect, url_for, abort
 
+from age_gender import AgeGenderDetector
+
 logging.basicConfig(
     level=logging.DEBUG,
     format='[%(asctime)-15s] %(levelname)s: %(message)s'
@@ -14,9 +16,17 @@ logging.basicConfig(
 app = Flask(__name__)
 storage_dir = Path(tempfile.mkdtemp(prefix='photokek-'))
 logging.debug('Data directory is at {storage_dir}'.format(storage_dir=storage_dir))
+age_gender_detector = AgeGenderDetector(
+    storage_dir,
+    yolo_path=Path('../models/YOLO_tiny.ckpt'),
+    age_path=Path('../models/age'),
+    gender_path=Path('../models/gender')
+)
 
 
 def process(image):
+    age_gender = age_gender_detector.run(image)
+    logging.debug('Computed age & gender: {}'.format(age_gender))
     # Some magic happens here
     return image, 'funny text'
 
@@ -106,4 +116,4 @@ def root():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()#debug=True)

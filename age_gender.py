@@ -75,10 +75,10 @@ if __name__ == '__main__':
 
     age_gender_detector = AgeGenderDetector(
         work_dir=tempfile.mkdtemp(prefix='age-gender-'),
-        yolo_path=Path('../models/YOLO_tiny.ckpt').expanduser(),
-        age_path=Path('../models/age').expanduser(),
-        gender_path=Path('../models/gender').expanduser()
+        yolo_path=Path('../models/YOLO_tiny.ckpt'),
+        age_path=Path('../models/age'),
+        gender_path=Path('../models/gender')
     )
 
-    image = skimage.io.imread(Path('../images/grisha.jpg').expanduser())
+    image = skimage.io.imread(Path('../images/photo.jpg'))
     print(age_gender_detector.run(image))
