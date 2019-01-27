@@ -25,9 +25,9 @@ age_gender_detector = AgeGenderDetector(
 
 def process(image):
     age_gender = age_gender_detector.run(image)
-    age = age_gender['age']
-    gender = age_gender['gender']
-    logging.debug('Computed age: {}, gender: {}'.format(age, gender))
+    age_range, age_prob = age_gender['age']
+    gender, gender_prob = age_gender['gender']
+    logging.debug('Computed age: {} (p={}), gender: {} (p={})'.format(age_range, age_prob, gender, gender_prob))
     # Some magic happens here
     return image, 'funny text'
 
