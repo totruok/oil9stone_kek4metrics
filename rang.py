@@ -8,7 +8,8 @@ def sort_questions(age, gender, questions):
     return sorted(
         questions,
         key=lambda x:
-            1 * abs(AGE2INDEX[x['rule']['age']] - AGE2INDEX[age])
-            + 1 * float(x['rule']['gender'] != gender)
+            1 * abs(AGE2INDEX[x['rule']['age']] - AGE2INDEX[age])\
+            + 1 * float(x['rule']['gender'] != gender)\
+            + 1 * float(x['correct'])
     )
 

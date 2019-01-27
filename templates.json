@@ -5,6 +5,7 @@
         "gender": "F",
         "age": "(15, 20)"
     },
+    "correct": 0,
     "swap_to_use": "grisha",
     "templates": [{
             "access_key_picture": "4b2de4397cfd3b11c85a080d5c87223e.jpe",
@@ -40,6 +41,7 @@
             "gender": "M",
             "age": "(15, 20)"
         },
+        "correct": 0,
         "swap_to_use": "monty2",
         "templates": [
             {
@@ -66,6 +68,7 @@
             "gender": "M",
             "age": "(25, 32)"
         },
+        "correct": 0,
         "swap_to_use": "monty2",
         "templates": [
             {
@@ -90,7 +93,7 @@
             },
             {
                 "access_key_picture": "6d3d5328fc602861db922377a4bd8b32.jpe",
-                "text_on_picture": "Лао Цзи",
+                "text_on_picture": "Лао Цзы",
                 "text": "Вы умеете формулировать свои мысли, и давать мудрые советы, потому что  разбираетесь в людях и умеете видеть их скрытые черты."
             }
         ]
@@ -102,6 +105,7 @@
             "gender": "F",
             "age": "(15, 20)"
         },
+        "correct": 0,
         "swap_to_use": "monty2",
         "templates": [
             {
@@ -118,6 +122,72 @@
                 "access_key_picture": "e96b4937f8276562445d421951c55d7c.jpe",
                 "text_on_picture": "Девочка-катастрофа",
                 "text": "Сжигая мосты ты не оборачиваешься. Ты лишь ехидно ухмыляешься едкому аромату горящего прошлого."
+            }
+        ]
+    },
+    {
+        "id": 5,
+        "name": "Как сложится ваша жизнь через 5 лет?",
+        "rule": {
+            "gender": "M",
+            "age": "(15, 20)"
+        },
+        "correct": 10,
+        "swap_to_use": "monty2",
+        "templates": [
+            {
+                "access_key_picture": "ea3347857347cd7a63d1d810f642964d.jpe",
+                "text_on_picture": "Предприниматель",
+                "text": "Тот, кто говорит, что деньги не могут купить счастье, не знает, где делать покупки."
+            },
+            {
+                "access_key_picture": "a6847b1c6000d27d51fbce583cb5aa.jpe",
+                "text_on_picture": "Босс мафии",
+                "text": "Будьте осторожны в своих выражениях, они могут быть только прощены, но не забыты."
+            }
+        ]
+    },
+    {
+        "id": 6,
+        "name": "Какая у вас супер способность?",
+        "rule": {
+            "gender": "M",
+            "age": "(15, 20)"
+        },
+        "correct": 11,
+        "swap_to_use": "monty2",
+        "templates": [
+            {
+                "access_key_picture": "d2c5ffca956cd1347ac65601a929c0db.jpe",
+                "text_on_picture": "Хорошо выглядеть",
+                "text": "Вы красивы внутри и снаружи. Трудно сказать «нет» такому человеку, как вы!"
+            },
+            {
+                "access_key_picture": "68328a8795250012fbddb0bce5b980d8.jpe",
+                "text_on_picture": "Доброта",
+                "text": "Вы вдохновляете людей помогать другим. Вы слишком хороши и чисты для этого мира."
+            }
+        ]
+    },
+    {
+        "id": 7,
+        "name": "Когда вы умрёте?",
+        "rule": {
+            "gender": "F",
+            "age": "(38, 43)"
+        },
+        "swap_to_use": "monty2",
+        "correct": 5,
+        "templates": [
+            {
+                "access_key_picture": "37c283462e0e09a632ac350b65130b0c.jpe",
+                "text_on_picture": "78 лет",
+                "text": "Когда я умру, я хочу, что бы кто-нибудь удалил мою историю поиска."
+            },
+            {
+                "access_key_picture": "8263d8e64f0d1b848c70d537233e3670.jpe",
+                "text_on_picture": "82 года",
+                "text": "Похороните меня с костью слона, чтобы археологи строили свои догадки обо мне"
             }
         ]
     }
