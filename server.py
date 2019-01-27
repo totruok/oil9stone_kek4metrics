@@ -1,6 +1,7 @@
 import io
 import json
 import logging
+import random
 import tempfile
 import time
 from pathlib import Path
@@ -78,7 +79,6 @@ def wait_for_jobs(job_ids):
                     meme_ids[i] = None
         time.sleep(1)
     return meme_ids
-    # pic is at http://home.totruok.ru:40925/{meme_id}
 
 
 def process(image):
@@ -89,30 +89,38 @@ def process(image):
 
     image_key = send_file(image)
 
-    q = sort_questions(age_range, gender, questions)[0]
-
-    name = q['name']
+    qs = sort_questions(age_range, gender, questions)
+    t_indices = [random.randint(0, len(q['templates']) - 1) for q in qs]
 
     job_ids = [
-        send_meme_job(image_key, t['access_key_picture'], q['swap_to_use'])
-        for t in q['templates']
+        send_meme_job(
+            image_key,
+            q['templates'][t_idx]['access_key_picture'],
+            q['swap_to_use']
+        )
+        for q, t_idx in zip(qs, t_indices)
     ]
-    logging.debug('Sent job_ids: {}, waiting for memes'.format(job_ids))
+    logging.debug('Sent job_ids: {}, polling memes'.format(job_ids))
     meme_ids = wait_for_jobs(job_ids)
     logging.debug('Retrieved meme_ids: {}'.format(meme_ids))
 
     templates = [
-        (meme_id, t['text_on_picture'], t['text'])
-        for meme_id, t
-        in zip(meme_ids, q['templates'])
+        {
+            'meme_id': meme_id,
+            'name': q['name'],
+            'text_on_picture': q['templates'][t_idx]['text_on_picture'],
+            'text': q['templates'][t_idx]['text']
+        }
+        for meme_id, t_idx, q
+        in zip(meme_ids, t_indices, qs)
         if meme_id is not None
     ]
 
-    return image, name, templates
+    return templates
 
 
 def hash_image(image):
-    return str(hash(image.data.tobytes()) % 0xFFFFFFFFFFFFFFFF)
+    return '{:016x}'.format(hash(image.data.tobytes()) % 0xFFFFFFFFFFFFFFFF)
 
 
 @app.route('/retrieve/<key>', methods=['GET'])
@@ -144,15 +152,11 @@ def result():
         ))
         abort(404)
 
-    with (result_dir / 'data.json').open('r') as fp:
-        data = json.load(fp)
-    name, templates = data['name'], data['templates']
+    with (result_dir / 'templates.json').open('r') as fp:
+        templates = json.load(fp)
 
     return render_template(
-        'template.html',
-        image_key=key,
-        name=name,
-        description='',
+        'result.html',
         templates=templates
     )
 
@@ -185,18 +189,14 @@ def upload():
             key=key
         ))
         out_dir.mkdir(parents=True)
-        out_image, name, templates = process(in_image)
+        templates = process(in_image)
         logging.info('Saving processed {filename!r} to {out_dir}'.format(
             filename=in_file.filename,
             out_dir=out_dir
         ))
-        data = {
-            'name': name,
-            'templates': templates
-        }
-        skimage.io.imsave(out_dir / 'image.png', out_image)
-        with (out_dir / 'data.json').open('w') as fp:
-            json.dump(data, fp)
+        skimage.io.imsave(out_dir / 'image.png', in_image)
+        with (out_dir / 'templates.json').open('w') as fp:
+            json.dump(templates, fp)
     return redirect(url_for('result', key=key))
 
 

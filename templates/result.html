@@ -102,6 +102,16 @@
             text-align: center;
             color: #483665;
         }
+        .coincidence-header-white {
+            margin-top: 102px;
+            margin-bottom: 40px;
+            max-width: 640px;
+            font-family: 'TTNorms-ExtraBold', sans-serif;
+            line-height: normal;
+            font-size: 48px;
+            text-align: center;
+            color: #FFFFFF;
+        }
         .coincidence-item {
             flex: 0 30%;
             padding-left: 30px;
@@ -157,37 +167,63 @@
             color: #7E7E7E;
             display: block;
         }
+        .coincidence-item-title {
+            padding-top: 32px;
+            width: 100%;
+            font-family: 'TTNorms-ExtraBold', sans-serif;
+            line-height: 31px;
+            font-size: 32px;
+            text-align: center;
+            color: #483665;
+            padding-bottom: 25px;
+        }
+        .coincidence-item-probability {
+            padding-top: 15px;
+            padding-bottom: 15px;
+            width: 100%;
+            font-family: 'TTNorms-Bold', sans-serif;
+            line-height: 31px;
+            font-size: 27px;
+            text-align: center;
+            color: #7E7E7E
+        }
+        .coincidence-item-probability > span {
+            color: #483665;
+        }
     </style>
 </head>
     <body>
         <div class="main-form">
             <div style="padding-bottom: 70px">
                 <div class="logo"><span>keklab</span> by Oilstone</div>
+                <p class="coincidence-header-white">{{ templates[0]['name'] }}</p>
                 <div class="result">
-                    <div class="center-cropped" style="background-image: url('/retrieve/{{ image_key }}');">
+                    <div class="center-cropped" style="background-image: url('http://home.totruok.ru:40925/{{ templates[0]['meme_id'] }}');">
                         <div class="gradient">
                             <div class="empty"></div>
-                            <p class="result-title">{{ name }}</p>
+                            <p class="result-title">{{ templates[0]['text_on_picture'] }}</p>
                             <button class="btn-green" id="share"><span>Поделиться</span></button>
                         </div>
                     </div>
                 </div>
             </div>
-            <p class="description">{{ description }}</p>
+            <p class="description">{{ templates[0]['text'] }}</p>
             <p class="coincidence-header">Наиболее вероятные совпадения</p>
 
             <div class="coincidence-items">
-                {% for meme_id, text_on_picture, text in templates %}
+                {% for template in templates[1:] %}
                 <div class="coincidence-item">
+                    <p class="coincidence-item-title">{{ template['name'] }}</p>
                     <div class="coincidence-image">
-                        <div class="center-cropped" style="background-image: url('http://home.totruok.ru:40925/{{ meme_id }}');">
+                        <div class="center-cropped" style="background-image: url('http://home.totruok.ru:40925/{{ template['meme_id'] }}');">
                             <div class="gradient">
                                 <div class="empty"></div>
-                                <p class="coincidence-title">{{ text_on_picture }}</p>
+                                <p class="coincidence-title">{{ template['text_on_picture'] }}</p>
                             </div>
                         </div>
                     </div>
-                    <p class="coincidence-description">{{ text }}</p>
+{#                    <p class="coincidence-item-probability">Вероятность - <span>99%</span></p>#}
+                    <p class="coincidence-description">{{ template['text'] }}</p>
                 </div>
                 {% endfor %}
             </div>
