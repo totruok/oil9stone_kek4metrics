@@ -46,10 +46,11 @@ def send_file(image):
     ).json()["access_key"]
 
 
-def send_meme_job(access_key, meme_id):
+def send_meme_job(access_key, meme_id, face_swap_method):
     url = "http://home.totruok.ru:40936/push?kind=swap&priority=0"
     params = {
         "face": access_key,
+        "face_swap_method": face_swap_method,
         "meme": meme_id
     }
 
@@ -65,7 +66,7 @@ def wait_for_jobs(job_ids):
     meme_ids = ['pending'] * len(job_ids)
     while any((meme_id == 'pending') for meme_id in meme_ids):
         for i in range(len(job_ids)):
-            if meme_ids[i] is None:
+            if meme_ids[i] == 'pending':
                 data = requests.get(
                     url,
                     params={"jobid": job_ids[i]},
@@ -88,20 +89,24 @@ def process(image):
 
     image_key = send_file(image)
 
-    qs = sort_questions(age_range, gender, questions)
-    q = qs[0]
+    q = sort_questions(age_range, gender, questions)[0]
+
     name = q['name']
 
-    templates = []
+    job_ids = [
+        send_meme_job(image_key, t['access_key_picture'], q['swap_to_use'])
+        for t in q['templates']
+    ]
+    logging.debug('Sent job_ids: {}, waiting for memes'.format(job_ids))
+    meme_ids = wait_for_jobs(job_ids)
+    logging.debug('Retrieved meme_ids: {}'.format(meme_ids))
 
-    # job_ids = [send_meme_job(image_key, t['access_key_picture']) for t in q['templates']]
-    # meme_ids = wait_for_jobs(job_ids)
-
-    for t in q['templates']:
-        access_key = t['access_key_picture']
-
-        meme_id = access_key
-        templates.append((meme_id, t['text_on_picture'], t['text']))
+    templates = [
+        (meme_id, t['text_on_picture'], t['text'])
+        for meme_id, t
+        in zip(meme_ids, q['templates'])
+        if meme_id is not None
+    ]
 
     return image, name, templates
 
