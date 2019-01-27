@@ -1,4 +1,3 @@
-import base64
 import logging
 import tempfile
 from pathlib import Path
@@ -26,7 +25,9 @@ age_gender_detector = AgeGenderDetector(
 
 def process(image):
     age_gender = age_gender_detector.run(image)
-    logging.debug('Computed age & gender: {}'.format(age_gender))
+    age = age_gender['age']
+    gender = age_gender['gender']
+    logging.debug('Computed age: {}, gender: {}'.format(age, gender))
     # Some magic happens here
     return image, 'funny text'
 
@@ -123,4 +124,4 @@ def root():
 
 
 if __name__ == '__main__':
-    app.run()#debug=True)
+    app.run()  # debug=True)
