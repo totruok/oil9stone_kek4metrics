@@ -2,7 +2,7 @@
     "id": 1,
     "name": "Какой ты кот?",
     "rule": {
-        "sex": "F",
+        "gender": "F",
         "age": "(25, 32)"
     },
     "swap_to_use": "grisha",
