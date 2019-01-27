@@ -90,6 +90,8 @@ def process(image):
     image_key = send_file(image)
 
     qs = sort_questions(age_range, gender, questions)
+
+    random.seed(int(hash_image(image), base=16))
     t_indices = [random.randint(0, len(q['templates']) - 1) for q in qs]
 
     job_ids = [
