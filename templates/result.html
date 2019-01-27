@@ -16,22 +16,22 @@
             align-items: center;
             height: 640px;
             width: 640px;
-            background:
-                    linear-gradient(to bottom, #FFFFFF, #FFFFFF) no-repeat 12px 12px,
-                    linear-gradient(to bottom, #483665, #483665) no-repeat 0 0,
-                    linear-gradient(to bottom, #CCFF00, #CCFF00) no-repeat 12px 12px;
-            background-size:
-                    calc(100% - 36px) calc(100% - 36px),
-                    calc(100% - 12px) calc(100% - 12px),
-                    100% 100%;
+            background: linear-gradient(to bottom, #FFFFFF, #FFFFFF) no-repeat 12px 12px,
+            linear-gradient(to bottom, #483665, #483665) no-repeat 0 0,
+            linear-gradient(to bottom, #CCFF00, #CCFF00) no-repeat 12px 12px;
+            background-size: calc(100% - 36px) calc(100% - 36px),
+            calc(100% - 12px) calc(100% - 12px),
+            100% 100%;
             padding: 12px 24px 24px 12px;
         }
+
         .center-cropped {
             width: 100%;
             height: 100%;
             background: no-repeat center center;
             background-size: cover;
         }
+
         .gradient {
             display: flex;
             flex-direction: column;
@@ -40,9 +40,11 @@
             height: 100%;
             background: linear-gradient(180deg, rgba(219, 255, 0, 0) 20.31%, rgba(92, 38, 147, 0.71) 96.5%);
         }
+
         .empty {
             flex-grow: 1;
         }
+
         .result-title {
             font-family: 'TTNorms-ExtraBold', sans-serif;
             line-height: normal;
@@ -50,6 +52,7 @@
             text-align: center;
             color: #FFFFFF;
         }
+
         .btn-green {
             margin: auto;
             width: 332px;
@@ -57,13 +60,12 @@
             background: #16a085;
             display: inline-block;
             border: none;
-            background:
-                    linear-gradient(to bottom, #CCFF00, #CCFF00) no-repeat 0 0,
-                    linear-gradient(to bottom, #483665, #483665) no-repeat 12px 12px;
-            background-size:
-                    calc(100% - 12px) calc(100% - 12px),
-                    100% 100%;
+            background: linear-gradient(to bottom, #CCFF00, #CCFF00) no-repeat 0 0,
+            linear-gradient(to bottom, #483665, #483665) no-repeat 12px 12px;
+            background-size: calc(100% - 12px) calc(100% - 12px),
+            100% 100%;
         }
+
         #share {
             position: relative;
             top: 62px;
@@ -78,6 +80,7 @@
             color: #483665;
             display: block;
         }
+
         .description {
             max-width: 500px;
             font-family: 'TTNorms-Regular', sans-serif;
@@ -102,6 +105,7 @@
             text-align: center;
             color: #483665;
         }
+
         .coincidence-header-white {
             max-width: 640px;
             font-family: 'TTNorms-ExtraBold', sans-serif;
@@ -112,6 +116,7 @@
             padding-bottom: 30px;
             padding-top: 20px;
         }
+
         .coincidence-header-white-sub {
             max-width: 800px;
             font-family: 'TTNorms-ExtraBold', sans-serif;
@@ -120,9 +125,11 @@
             text-align: center;
             color: #FFFFFF;
         }
+
         .coincidence-header-white-sub > span {
             color: #CCFF00;
         }
+
         .coincidence-item {
             flex: 0 30%;
             padding-left: 30px;
@@ -136,15 +143,14 @@
             width: 400px;
             height: 400px;
             padding: 12px 24px 24px 12px;
-            background:
-                    linear-gradient(to bottom, #FFFFFF, #FFFFFF) no-repeat 12px 12px,
-                    linear-gradient(to bottom, #483665, #483665) no-repeat 0 0,
-                    linear-gradient(to bottom, #CCFF00, #CCFF00) no-repeat 12px 12px;
-            background-size:
-                    calc(100% - 36px) calc(100% - 36px),
-                    calc(100% - 12px) calc(100% - 12px),
-                    100% 100%;
+            background: linear-gradient(to bottom, #FFFFFF, #FFFFFF) no-repeat 12px 12px,
+            linear-gradient(to bottom, #483665, #483665) no-repeat 0 0,
+            linear-gradient(to bottom, #CCFF00, #CCFF00) no-repeat 12px 12px;
+            background-size: calc(100% - 36px) calc(100% - 36px),
+            calc(100% - 12px) calc(100% - 12px),
+            100% 100%;
         }
+
         .coincidence-title {
             font-family: 'TTNorms-ExtraBold', sans-serif;
             line-height: normal;
@@ -153,6 +159,7 @@
             color: #FFFFFF;
             padding-bottom: 35px;
         }
+
         .coincidence-description {
             padding-top: 32px;
             width: 100%;
@@ -162,10 +169,12 @@
             text-align: center;
             color: #483665;
         }
+
         #refresh {
             margin-top: 64px;
             margin-bottom: 170px;
         }
+
         .footer {
             height: 64px;
             bottom: 0;
@@ -178,6 +187,7 @@
             color: #7E7E7E;
             display: block;
         }
+
         .coincidence-item-title {
             padding-top: 32px;
             width: 100%;
@@ -188,6 +198,7 @@
             color: #483665;
             padding-bottom: 25px;
         }
+
         .coincidence-item-probability {
             padding-top: 15px;
             padding-bottom: 15px;
@@ -198,50 +209,60 @@
             text-align: center;
             color: #7E7E7E
         }
+
         .coincidence-item-probability > span {
             color: #483665;
         }
     </style>
 </head>
-    <body>
-        <div class="main-form">
-            <div style="padding-bottom: 70px">
-                <div class="logo"><span>keklab</span> by Oilstone</div>
-                <p class="coincidence-header-white-sub">Вы <span>{{ gender }}</span> с вероятностью {{ gender_prob }}.</p>
-                <p class="coincidence-header-white-sub">Вам примерно <span>от {{ age_from }} до {{ age_to }}</span> с вероятностью {{ age_prob }}.</p>
-                <p class="coincidence-header-white">{{ templates[0]['name'] }}</p>
-                <div class="result">
-                    <div class="center-cropped" style="background-image: url('http://home.totruok.ru:40925/{{ templates[0]['meme_id'] }}');">
+<body>
+<div class="main-form">
+    <div style="padding-bottom: 70px">
+        <div class="logo"><span>keklab</span> by Oilstone</div>
+        <p class="coincidence-header-white-sub">Ты <span>{{ gender }}</span> с вероятностью {{ gender_prob }}.</p>
+        <p class="coincidence-header-white-sub">Тебе примерно <span>от {{ age_from }} до {{ age_to }}</span> с
+            вероятностью {{ age_prob }}.</p>
+        <p class="coincidence-header-white">{{ templates[0]['name'] }}</p>
+        <div class="result">
+            <div class="center-cropped"
+                 style="background-image: url('http://home.totruok.ru:40925/{{ templates[0]['meme_id'] }}');">
+                <div class="gradient">
+                    <div class="empty"></div>
+                    <p class="result-title">{{ templates[0]['text_on_picture'] }}</p>
+                    <button class="btn-green" id="share"><span>Поделиться</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p class="description">{{ templates[0]['text'] }}</p>
+    <p class="coincidence-header">Другие тайны о тебе</p>
+
+    <div class="coincidence-items">
+        {% for template in templates[1:] %}
+            <div class="coincidence-item">
+                <p class="coincidence-item-title">{{ template['name'] }}</p>
+                <div class="coincidence-image">
+                    <div class="center-cropped"
+                         style="background-image: url('http://home.totruok.ru:40925/{{ template['meme_id'] }}');">
                         <div class="gradient">
                             <div class="empty"></div>
-                            <p class="result-title">{{ templates[0]['text_on_picture'] }}</p>
-                            <button class="btn-green" id="share"><span>Поделиться</span></button>
+                            <p class="coincidence-title">{{ template['text_on_picture'] }}</p>
                         </div>
                     </div>
                 </div>
+                {#                    <p class="coincidence-item-probability">Вероятность - <span>99%</span></p>#}
+                <p class="coincidence-description">{{ template['text'] }}</p>
             </div>
-            <p class="description">{{ templates[0]['text'] }}</p>
-            <p class="coincidence-header">Другие тайны о тебе</p>
-
-            <div class="coincidence-items">
-                {% for template in templates[1:] %}
-                <div class="coincidence-item">
-                    <p class="coincidence-item-title">{{ template['name'] }}</p>
-                    <div class="coincidence-image">
-                        <div class="center-cropped" style="background-image: url('http://home.totruok.ru:40925/{{ template['meme_id'] }}');">
-                            <div class="gradient">
-                                <div class="empty"></div>
-                                <p class="coincidence-title">{{ template['text_on_picture'] }}</p>
-                            </div>
-                        </div>
-                    </div>
-{#                    <p class="coincidence-item-probability">Вероятность - <span>99%</span></p>#}
-                    <p class="coincidence-description">{{ template['text'] }}</p>
-                </div>
-                {% endfor %}
-            </div>
-            <button class="btn-green" id="refresh"><span>Обновить результаты</span></button>
-        </div>
-        <div class="footer">© 2019 by Oilstone for Photolab PhotoHack.</div>
-    </body>
+        {% endfor %}
+    </div>
+    <button class="btn-green" id="refresh"><span>Обновить результаты</span></button>
+</div>
+<div class="footer">© 2019 by Oilstone for Photolab PhotoHack.</div>
+</body>
+<script>
+    document.getElementById("refresh").onclick = function () {
+        var key = location.search.split('key=')[1];
+        location.href = "/refresh?key=" + key;
+    };
+</script>
 </html>

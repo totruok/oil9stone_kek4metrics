@@ -82,7 +82,7 @@ def wait_for_jobs(job_ids):
     return meme_ids
 
 
-def process(image):
+def process(image, seed_extra=0):
     age_gender = age_gender_detector.run(image)
     age_range, age_prob = age_gender['age']
     gender, gender_prob = age_gender['gender']
@@ -92,7 +92,7 @@ def process(image):
 
     qs = sort_questions(age_range, gender, questions)
 
-    random.seed(int(hash_image(image), base=16))
+    random.seed(int(hash_image(image), base=16) + seed_extra)
     t_indices = [random.randint(0, len(q['templates']) - 1) for q in qs]
 
     job_ids = [
@@ -126,7 +126,8 @@ def process(image):
             for meme_id, t_idx, q
             in zip(meme_ids, t_indices, qs)
             if meme_id is not None
-        ]
+        ],
+        'seed_extra': seed_extra
     }
 
 
@@ -151,6 +152,31 @@ def retrieve(key):
     return send_from_directory(result_dir, 'image.png')
 
 
+@app.route('/refresh')
+def refresh():
+    key = request.args['key']
+    key_dir = storage_dir / key
+
+    if not key_dir.exists():
+        logging.warning('Key {key} not found in {storage_dir}'.format(
+            key=key,
+            storage_dir=storage_dir
+        ))
+        abort(404)
+
+    with (key_dir / 'data.json').open('r') as fp:
+        seed_extra = json.load(fp)['seed_extra']
+
+    original_image = skimage.io.imread(key_dir / 'image.png')
+
+    data = process(original_image, seed_extra + 1)
+    logging.info('Refreshing cached data for key={key}'.format(key=key))
+    with (key_dir / 'data.json').open('w') as fp:
+        json.dump(data, fp)
+
+    return redirect(url_for('result', key=key))
+
+
 @app.route('/result', methods=['GET'])
 def result():
     key = request.args['key']
@@ -172,10 +198,10 @@ def result():
         'result.html',
         templates=data['templates'],
         gender={'M': 'мужчина', 'F': 'женщина'}[data['gender']['value']],
-        gender_prob='{:.1f}%'.format(data['gender']['prob'] * 100),
+        gender_prob='{:d}%'.format(round(data['gender']['prob'] * 100)),
         age_from=age_from,
         age_to=age_to,
-        age_prob='{:.1f}%'.format(data['age']['prob'] * 100),
+        age_prob='{:d}%'.format(round(data['age']['prob'] * 100)),
     )
 
 
