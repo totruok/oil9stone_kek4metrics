@@ -20,15 +20,15 @@ logging.basicConfig(
 app = Flask(__name__)
 storage_dir = Path(tempfile.mkdtemp(prefix='photokek-'))
 logging.debug('Data directory is at {storage_dir}'.format(storage_dir=storage_dir))
+with open('templates.json', 'r') as fp:
+    questions = json.load(fp)
+AUTH = ("kekfacer", "whatsyourmooddude")
 age_gender_detector = AgeGenderDetector(
     storage_dir,
     yolo_path=Path('../models/YOLO_tiny.ckpt'),
     age_path=Path('../models/age'),
     gender_path=Path('../models/gender')
 )
-AUTH = ("kekfacer", "whatsyourmooddude")
-# with open('templates.json', 'r') as fp:
-#     questions = json.load(fp)
 
 
 def send_file(image):
@@ -86,17 +86,22 @@ def process(image):
     gender, gender_prob = age_gender['gender']
     logging.debug('Computed age: {} (p={}), gender: {} (p={})'.format(age_range, age_prob, gender, gender_prob))
 
-    name = 'image caption'
+    image_key = send_file(image)
 
-    # qs = sort_questions(age_range, gender, questions)
-    # q = qs[0]
-    # caption = q['name']
+    qs = sort_questions(age_range, gender, questions)
+    q = qs[0]
+    name = q['name']
 
-    meme_id = ''
-    text_on_picture = 'Котик во время дедлайна'
-    text = 'YOLO yobanah abyrvalg'
+    templates = []
 
-    templates = [(meme_id, text_on_picture, text)]
+    # job_ids = [send_meme_job(image_key, t['access_key_picture']) for t in q['templates']]
+    # meme_ids = wait_for_jobs(job_ids)
+
+    for t in q['templates']:
+        access_key = t['access_key_picture']
+
+        meme_id = access_key
+        templates.append((meme_id, t['text_on_picture'], t['text']))
 
     return image, name, templates
 
