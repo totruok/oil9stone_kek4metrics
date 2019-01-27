@@ -103,14 +103,24 @@
             color: #483665;
         }
         .coincidence-header-white {
-            margin-top: 102px;
-            margin-bottom: 40px;
             max-width: 640px;
             font-family: 'TTNorms-ExtraBold', sans-serif;
             line-height: normal;
             font-size: 48px;
             text-align: center;
             color: #FFFFFF;
+            padding-bottom: 30px;
+        }
+        .coincidence-header-white-sub {
+            max-width: 800px;
+            font-family: 'TTNorms-ExtraBold', sans-serif;
+            line-height: normal;
+            font-size: 30px;
+            text-align: center;
+            color: #FFFFFF;
+        }
+        .coincidence-header-white-sub > span {
+            color: #CCFF00;
         }
         .coincidence-item {
             flex: 0 30%;
@@ -196,6 +206,8 @@
         <div class="main-form">
             <div style="padding-bottom: 70px">
                 <div class="logo"><span>keklab</span> by Oilstone</div>
+                <p class="coincidence-header-white-sub">Вы <span>{{ gender }}</span> с вероятностью {{ gender_prob }}.</p>
+                <p class="coincidence-header-white-sub">Вам примерно <span>от {{ age_from }} до {{ age_to }}</span> с вероятностью {{ age_prob }}.</p>
                 <p class="coincidence-header-white">{{ templates[0]['name'] }}</p>
                 <div class="result">
                     <div class="center-cropped" style="background-image: url('http://home.totruok.ru:40925/{{ templates[0]['meme_id'] }}');">

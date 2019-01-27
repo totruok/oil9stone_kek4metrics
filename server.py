@@ -104,19 +104,27 @@ def process(image):
     meme_ids = wait_for_jobs(job_ids)
     logging.debug('Retrieved meme_ids: {}'.format(meme_ids))
 
-    templates = [
-        {
-            'meme_id': meme_id,
-            'name': q['name'],
-            'text_on_picture': q['templates'][t_idx]['text_on_picture'],
-            'text': q['templates'][t_idx]['text']
-        }
-        for meme_id, t_idx, q
-        in zip(meme_ids, t_indices, qs)
-        if meme_id is not None
-    ]
-
-    return templates
+    return {
+        'age': {
+            'value': age_range,
+            'prob': float(age_prob)
+        },
+        'gender': {
+            'value': gender,
+            'prob': float(gender_prob)
+        },
+        'templates': [
+            {
+                'meme_id': meme_id,
+                'name': q['name'],
+                'text_on_picture': q['templates'][t_idx]['text_on_picture'],
+                'text': q['templates'][t_idx]['text']
+            }
+            for meme_id, t_idx, q
+            in zip(meme_ids, t_indices, qs)
+            if meme_id is not None
+        ]
+    }
 
 
 def hash_image(image):
@@ -152,12 +160,19 @@ def result():
         ))
         abort(404)
 
-    with (result_dir / 'templates.json').open('r') as fp:
-        templates = json.load(fp)
+    with (result_dir / 'data.json').open('r') as fp:
+        data = json.load(fp)
+
+    age_from, age_to = data['age']['value'][1:-1].split(', ')
 
     return render_template(
         'result.html',
-        templates=templates
+        templates=data['templates'],
+        gender={'M': 'мужчина', 'F': 'женщина'}[data['gender']['value']],
+        gender_prob='{:.1f}%'.format(data['gender']['prob'] * 100),
+        age_from=age_from,
+        age_to=age_to,
+        age_prob='{:.1f}%'.format(data['age']['prob'] * 100),
     )
 
 
@@ -189,14 +204,14 @@ def upload():
             key=key
         ))
         out_dir.mkdir(parents=True)
-        templates = process(in_image)
+        data = process(in_image)
         logging.info('Saving processed {filename!r} to {out_dir}'.format(
             filename=in_file.filename,
             out_dir=out_dir
         ))
         skimage.io.imsave(out_dir / 'image.png', in_image)
-        with (out_dir / 'templates.json').open('w') as fp:
-            json.dump(templates, fp)
+        with (out_dir / 'data.json').open('w') as fp:
+            json.dump(data, fp)
     return redirect(url_for('result', key=key))
 
 
