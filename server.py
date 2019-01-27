@@ -27,8 +27,8 @@ age_gender_detector = AgeGenderDetector(
     gender_path=Path('../models/gender')
 )
 AUTH = ("kekfacer", "whatsyourmooddude")
-with open('templates.json', 'r') as fp:
-    questions = json.load(fp)
+# with open('templates.json', 'r') as fp:
+#     questions = json.load(fp)
 
 
 def send_file(image):
