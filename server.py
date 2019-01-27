@@ -1,11 +1,16 @@
+import io
+import json
 import logging
 import tempfile
+import time
 from pathlib import Path
 
+import requests
 import skimage.io
 from flask import Flask, request, redirect, url_for, abort, render_template, send_from_directory
 
 from age_gender import AgeGenderDetector
+from rang import sort_questions
 
 logging.basicConfig(
     level=logging.DEBUG,
@@ -21,6 +26,58 @@ age_gender_detector = AgeGenderDetector(
     age_path=Path('../models/age'),
     gender_path=Path('../models/gender')
 )
+AUTH = ("kekfacer", "whatsyourmooddude")
+with open('templates.json', 'r') as fp:
+    questions = json.load(fp)
+
+
+def send_file(image):
+    url = "http://home.totruok.ru:40936/upload"
+
+    png = io.BytesIO()
+    skimage.io.imsave(png, image, format_str='png')
+    png.seek(0)
+
+    files = {'image': png}
+    return requests.post(
+        url,
+        files=files,
+        auth=AUTH
+    ).json()["access_key"]
+
+
+def send_meme_job(access_key, meme_id):
+    url = "http://home.totruok.ru:40936/push?kind=swap&priority=0"
+    params = {
+        "face": access_key,
+        "meme": meme_id
+    }
+
+    return requests.post(
+        url,
+        data={"params": json.dumps(params)},
+        auth=AUTH
+    ).json()['jobid']
+
+
+def wait_for_jobs(job_ids):
+    url = "http://home.totruok.ru:40936/get_result"
+    meme_ids = ['pending'] * len(job_ids)
+    while any((meme_id == 'pending') for meme_id in meme_ids):
+        for i in range(len(job_ids)):
+            if meme_ids[i] is None:
+                data = requests.get(
+                    url,
+                    params={"jobid": job_ids[i]},
+                    auth=AUTH
+                ).json()
+                if 'result' in data:
+                    meme_ids[i] = data['result']
+                elif 'error' in data:
+                    meme_ids[i] = None
+        time.sleep(1)
+    return meme_ids
+    # pic is at http://home.totruok.ru:40925/{meme_id}
 
 
 def process(image):
@@ -28,7 +85,11 @@ def process(image):
     age_range, age_prob = age_gender['age']
     gender, gender_prob = age_gender['gender']
     logging.debug('Computed age: {} (p={}), gender: {} (p={})'.format(age_range, age_prob, gender, gender_prob))
-    # Some magic happens here
+
+    # qs = sort_questions(age_range, gender, questions)
+    # q = qs[0]
+    # caption = q['name']
+
     return image, 'funny text'
 
 
